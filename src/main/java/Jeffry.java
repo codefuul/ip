@@ -11,10 +11,19 @@ public class Jeffry {
         System.out.println("Hello! I'm Jeffry.");
         System.out.println("What can I do for you?");
         System.out.println("--------------------------------------------------");
-
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String userInput;
+        while (true) {
+            userInput = scanner.nextLine();
+            if (userInput.equals("bye")) {
+                break;
+            }
+            System.out.println("--------------------------------------------------");
+            System.out.println(userInput);
+            System.out.println("--------------------------------------------------");
+        }
+        System.out.println("--------------------------------------------------");
         System.out.println("Bye! Hope to see you again soon!");
         System.out.println("--------------------------------------------------");
-
     }
-
 }

@@ -12,13 +12,6 @@ public class Jeffry {
         System.out.println("What can I do for you?");
         System.out.println("--------------------------------------------------");
 
-       
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-        String userInput;
-        do {
-            userInput = scanner.nextLine();
-            System.out.println(userInput);
-        } while (!userInput.equals("bye"));
         System.out.println("Bye! Hope to see you again soon!");
         System.out.println("--------------------------------------------------");
 

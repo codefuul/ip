@@ -1,38 +1,42 @@
 import java.util.Scanner;
 
 public class Jeffry {
+    // Coding Standard: Constants should be named in UPPER_CASE
+    private static final int MAX_TASKS = 100;
+    private static final String DIVIDER = "____________________________________________________________";
+
     public static void main(String[] args) {
         // POLYMORPHISM: We create an array of the parent class (Task)
         // This array can hold Todos, Deadlines, and Events!
-        Task[] tasks = new Task[100];
+        Task[] tasks = new Task[MAX_TASKS];
         int taskCount = 0;
 
-        String logo = "   _           __    __          _   _ \n"
-                + "  (_)   ___   / _|  / _|  _ __  | | | |\n"
-                + "  | |  / _ \\ | |_  | |_  | '__| | |_| |\n"
-                + " _/ | |  __/ |  _| |  _| | |     \\__, |\n"
-                + "|__/   \\___| |_|   |_|   |_|     |___/ \n";
+        String logo = """
+                   _           __    __          _   _\s
+                  (_)   ___   / _|  / _|  _ __  | | | |
+                  | |  / _ \\ | |_  | |_  | '__| | |_| |
+                 _/ | |  __/ |  _| |  _| | |     \\__, |
+                |__/   \\___| |_|   |_|   |_|     |___/\s
+                """;
 
         System.out.println("Hello from\n" + logo);
-        System.out.println("____________________________________________________________");
+        System.out.println(DIVIDER);
         System.out.println("Hello! I'm Jeffry.");
         System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________");
+        System.out.println(DIVIDER);
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
 
         while (true) {
             userInput = scanner.nextLine();
-            System.out.println("____________________________________________________________");
+            System.out.println(DIVIDER);
 
             if (userInput.equals("bye")) {
                 break;
             } else if (userInput.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskCount; i++) {
-                    // Polymorphism in action: Java calls the toString()
-                    // of the specific child class (Todo, Deadline, or Event)
                     System.out.println((i + 1) + "." + tasks[i].toString());
                 }
 
@@ -69,10 +73,10 @@ public class Jeffry {
                 printAddedTask(tasks[taskCount - 1], taskCount);
             }
 
-            System.out.println("____________________________________________________________");
+            System.out.println(DIVIDER);
         }
         System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
+        System.out.println(DIVIDER);
     }
 
     public static void printAddedTask(Task task, int count) {

@@ -72,6 +72,22 @@ public class Jeffry {
                     tasks[index].markAsNotDone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks[index]);
+                } else if (userInput.startsWith("delete")) {
+                    String[] parts = userInput.split(" ");
+                    if (parts.length < 2) {
+                        throw new JeffryException("Please specify which task number to delete.");
+                    }
+
+                    int index = Integer.parseInt(parts[1]) - 1;
+
+                    if (index < 0 || index >= tasks.size()) {
+                        throw new JeffryException("That task number does not exist.");
+                    }
+
+                    Task removedTask = tasks.remove(index);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("  " + removedTask);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
 
                 } else if (userInput.startsWith("todo")) {
                     // ERROR HANDLING: Check if description is empty

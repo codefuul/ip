@@ -1,10 +1,74 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Jeffry {
     // Coding Standard: Constants should be named in UPPER_CASE
     private static final String DIVIDER = "____________________________________________________________";
     private static ArrayList<Task> tasks = new ArrayList<>();
+
+    private static void saveTasks() {
+        try {
+            // Ensure the directory exists
+            File dir = new File("./data");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            // Write tasks to the file
+            FileWriter fw = new FileWriter("./data/jeffry.txt");
+            for (Task task : tasks) {
+                fw.write(task.toFileFormat() + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Error saving tasks to file: " + e.getMessage());
+        }
+    }
+
+    private static void loadTasks() {
+        try {
+            File file = new File("./data/jeffry.txt");
+            if (!file.exists()) {
+                return; // File doesn't exist yet, just start with an empty list
+            }
+
+            Scanner fileScanner = new Scanner(file);
+            while (fileScanner.hasNext()) {
+                String line = fileScanner.nextLine();
+                String[] parts = line.split(" \\| "); // Split using the delimiter
+
+                String type = parts[0];
+                boolean isDone = parts[1].equals("1");
+                String description = parts[2];
+                Task task = null;
+
+                if (type.equals("T")) {
+                    task = new Todo(description);
+                } else if (type.equals("D")) {
+                    task = new Deadline(description, parts[3]);
+                } else if (type.equals("E")) {
+                    task = new Event(description, parts[3], parts[4]);
+                }
+
+                if (task != null) {
+                    if (isDone) {
+                        task.markAsDone();
+                    }
+                    tasks.add(task);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Data file not found.");
+        } catch (Exception e) {
+            System.out.println("Data file is corrupted or formatted incorrectly.");
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -24,6 +88,8 @@ public class Jeffry {
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
+
+        loadTasks();
 
         while (true) {
             userInput = scanner.nextLine();
@@ -51,6 +117,7 @@ public class Jeffry {
                     }
 
                     tasks.get(index).markAsDone();
+                    saveTasks();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("  " + tasks.get(index));
 
@@ -67,6 +134,7 @@ public class Jeffry {
                     }
 
                     tasks.get(index).markAsNotDone();
+                    saveTasks();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks.get(index));
 
@@ -83,6 +151,7 @@ public class Jeffry {
                     }
 
                     Task removedTask = tasks.remove(index);
+                    saveTasks();
                     System.out.println("Noted. I've removed this task:");
                     System.out.println("  " + removedTask);
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
@@ -145,6 +214,7 @@ public class Jeffry {
     }
 
     public static void printAddedTask(Task task, int count) {
+        saveTasks();
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task.toString());
         System.out.println("Now you have " + count + " tasks in the list.");

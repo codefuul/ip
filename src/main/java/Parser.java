@@ -91,6 +91,28 @@ public class Parser {
                 tasks.addTask(newEvent);
                 printAddedTask(newEvent, tasks.getSize(), ui, storage, tasks);
 
+            } else if (userInput.startsWith("find")) {
+                if (userInput.trim().length() <= 4) {
+                    throw new JeffryException("Please provide a keyword to search for (e.g., find book).");
+                }
+
+                String keyword = userInput.substring(5).trim();
+                ui.showMessage("Here are the matching tasks in your list:");
+
+                int matchCount = 0;
+                for (int i = 0; i < tasks.getSize(); i++) {
+                    Task currentTask = tasks.getTask(i);
+                    // We check if the task's string representation contains the keyword
+                    if (currentTask.toString().contains(keyword)) {
+                        matchCount++;
+                        ui.showMessage(matchCount + "." + currentTask.toString());
+                    }
+                }
+
+                if (matchCount == 0) {
+                    ui.showMessage("No matching tasks found for: " + keyword);
+                }
+
             } else {
                 throw new JeffryException("What talking you? :-(");
             }

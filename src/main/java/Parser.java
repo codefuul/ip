@@ -1,5 +1,16 @@
-public class Parser {
+/**
+ * Parses user input and executes the corresponding commands.
+ */
 
+public class Parser {
+    /**
+     *
+     * @param userInput
+     * @param tasks
+     * @param ui
+     * @param storage
+     * @return
+     */
     // Returns true if the program should exit, false otherwise
     public static boolean parse(String userInput, TaskList tasks, Ui ui, Storage storage) {
         try {
